@@ -6,9 +6,12 @@ import CardCode from "../src/component/CardCode";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="split left">
         <CardCode />
-      </header>
+      </div>
+      <div className="split right">
+        <CardCode />
+      </div>
     </div>
   );
 }
