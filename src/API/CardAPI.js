@@ -1,13 +1,10 @@
-export const get = code => {
-  return { name: "Darius", image: "public\\DataDragonSet1\\en_us\\img\\cards\\01DE003.png" };
-};
+const api = `https://friendsofruneterraapi.azurewebsites.net/api`
 
-export const getCodes = username => {
-  return [
-    { code: "bob" },
-    { code: "bob" },
-    { code: "bob" },
-    { code: "bob" },
-    { code: "bob" }
-  ];
-};
+export const getCodes = username => fetch(`${api}/CardPositions`/*, { headers }*/)
+    .then(res => res.json())
+    .then(data => data.cards)
+
+// export const getAll = () =>
+//   fetch(`${api}/books`, { headers })
+//     .then(res => res.json())
+//     .then(data => data.books)
