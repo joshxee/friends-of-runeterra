@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import * as CardAPI from "../API/CardAPI";
 import {
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Grid,
@@ -11,19 +9,13 @@ import {
 } from "@material-ui/core";
 
 export default class CardCode extends Component {
-  state = { cardList: [] };
-
-  componentDidMount() {
-    CardAPI.getCodes('string11111').then(codes => {
-      this.setState({ cardList: codes });
-    });
-  }
 
   render() {
-    console.log(this.state.cardList)
+    let cards = this.props.Cards
+
     return (
       <Grid container spacing={2} style={{ padding: "20px" }}>
-        {this.state.cardList.map(card => {
+        {cards.map(card => {
           return (
             <Grid item xs={3} key={card.cardId}>
               <Card>
