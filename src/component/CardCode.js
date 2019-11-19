@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
+
 import {
   Card,
   CardActionArea,
@@ -9,6 +11,11 @@ import {
 } from "@material-ui/core";
 
 export default class CardCode extends Component {
+  static propTypes = {
+    contacts: PropTypes.array.isRequired,
+    onDeleteContact: PropTypes.func.isRequired,
+  }
+
   render() {
     let cards = this.props.Cards;
 
