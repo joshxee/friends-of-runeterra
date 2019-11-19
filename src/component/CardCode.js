@@ -9,25 +9,23 @@ import {
   Grid,
   Typography
 } from "@material-ui/core";
-import { isNullOrUndefined } from "util";
 
 export default class CardCode extends Component {
   state = { cardList: [] };
 
   componentDidMount() {
-    CardAPI.getCodes().then(codes => {
-      console.log(`${codes}`);
+    CardAPI.getCodes('string11111').then(codes => {
       this.setState({ cardList: codes });
     });
   }
 
   render() {
-    console.log(`${this.state.cardList}`);
+    console.log(this.state.cardList)
     return (
       <Grid container spacing={2} style={{ padding: "20px" }}>
         {this.state.cardList.map(card => {
           return (
-            <Grid item xs={3}>
+            <Grid item xs={3} key={card.cardId}>
               <Card>
                 <CardActionArea>
                   <CardMedia
@@ -45,6 +43,9 @@ export default class CardCode extends Component {
                     >
                       Josh is cool
                     </Typography>
+                    <div>
+                      {card.cardCode}
+                    </div>
                   </CardContent>
                 </CardActionArea>
               </Card>
