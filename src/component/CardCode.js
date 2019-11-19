@@ -7,17 +7,29 @@ import {
   Grid,
   Typography
 } from "@material-ui/core";
+import { cardVote } from "../API/VoteAPI";
 
 export default class CardCode extends Component {
-  render() {
-    let cards = this.props.Cards;
+  handleCardVoting = card => {
+    var cardInfo = {
+      friendId: this.props.Cards.id,
+      gameSessionId: this.props.Cards.gameSessionId,
+      cardId: card.id,
+      cardCode: card.code,
+      votedAt: "2019-11-19T10:04:15.554Z"
+    };
+    cardVote(cardInfo);
+  };
 
-    return (
+  render() {
+    let cards = this.props.Cards.cards;
+
+    return cards ? (
       <Grid container spacing={2} style={{ padding: "20px" }}>
         {cards.map(card => {
           return (
             <Grid item xs={3} key={card.cardId}>
-              <Card>
+              <Card onClick={() => this.handleCardVoting(card)}>
                 <CardActionArea>
                   <CardMedia
                     style={{ height: "400px" }}
@@ -43,6 +55,8 @@ export default class CardCode extends Component {
           );
         })}
       </Grid>
+    ) : (
+      ""
     );
   }
 }
