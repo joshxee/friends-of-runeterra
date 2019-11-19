@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get, getCodes } from "../API/CardAPI";
+import * as CardAPI from "../API/CardAPI";
 import {
   Card,
   CardActionArea,
@@ -9,37 +9,23 @@ import {
   Grid,
   Typography
 } from "@material-ui/core";
-import Darius from "../../src/images/darius-high-noon.jpg";
 
 export default class CardCode extends Component {
-  state = { cardList: "" };
-  componentDidMount() {}
-  //   apiCall = () => {
-  //     fetch("http://localhost:21337/positional-rectangles?code:something", {
-  //       method: "GET"
-  //     })
-  //       .then(function() {
-  //         console.log(Response.json());
-  //       })
-  //       .catch(function() {});
-  //   };
+  state = { cardList: [] };
 
-  getCodes = () => {
-    return getCodes("bob");
-  };
-
-  getCardList = () => {
-    const cardCodes = this.getCodes();
-    const cardList = cardCodes.map(cardCode => get(cardCode.code));
-    return cardList;
-  };
+  componentDidMount() {
+    CardAPI.getCodes('string11111').then(codes => {
+      this.setState({ cardList: codes });
+    });
+  }
 
   render() {
+    console.log(this.state.cardList)
     return (
       <Grid container spacing={2} style={{ padding: "20px" }}>
-        {this.getCardList().map(card => {
+        {this.state.cardList.map(card => {
           return (
-            <Grid item xs={3}>
+            <Grid item xs={3} key={card.cardId}>
               <Card>
                 <CardActionArea>
                   <CardMedia
@@ -57,6 +43,9 @@ export default class CardCode extends Component {
                     >
                       Josh is cool
                     </Typography>
+                    <div>
+                      {card.cardCode}
+                    </div>
                   </CardContent>
                 </CardActionArea>
               </Card>
