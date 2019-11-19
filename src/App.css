@@ -6,6 +6,18 @@
   height: 40vmin;
 }
 
+.media {
+  height:250px;
+}
+
+.cardName {
+  transition: all 0.25s linear;
+}
+
+.cardName:hover {
+  box-shadow: -1px 10px 29px 0px blue;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

@@ -9,10 +9,10 @@ import {
   Grid,
   Typography
 } from "@material-ui/core";
-import Darius from "../../src/images/darius-high-noon.jpg";
+import "../App.css";
 
 export default class CardCode extends Component {
-  state = { cardList: "" };
+  state = { raised: false };
   componentDidMount() {}
   //   apiCall = () => {
   //     fetch("http://localhost:21337/positional-rectangles?code:something", {
@@ -34,29 +34,32 @@ export default class CardCode extends Component {
     return cardList;
   };
 
+  toggleRaised = () => this.setState({ raised: !this.state.raised });
+
   render() {
     return (
       <Grid container spacing={2} style={{ padding: "20px" }}>
         {this.getCardList().map(card => {
           return (
             <Grid item xs={3}>
-              <Card>
+              <Card className="cardName">
                 <CardActionArea>
                   <CardMedia
-                    image="../../src/images/darius-high-noon.jpg"
+                    className="media"
+                    image={require("../../src/DataDragonSet1/en_us/img/cards/01DE001.png")}
                     title="Contemplative Reptile"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                       {card.name}
                     </Typography>
-                    <Typography
+                    {/* <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
                       Josh is cool
-                    </Typography>
+                    </Typography> */}
                   </CardContent>
                 </CardActionArea>
               </Card>
