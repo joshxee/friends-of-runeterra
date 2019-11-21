@@ -23,7 +23,7 @@ export default class CardCode extends PureComponent {
             <ToolTipGrid title={card.cardId}>
               <Grid item xs={3} key={card.cardId}>
                 <img
-                  src={require("../DataDragonSet1/en_us/img/cards/01DE001.png")}
+                  src={require(`../DataDragonSet1/en_us/img/cards/${card.cardId}.png`)}
                   style={{ maxWidth: "100%" }}
                   alt="card"
                 />
