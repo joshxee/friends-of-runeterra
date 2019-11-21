@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
 import { Grid, Tooltip } from "@material-ui/core";
+import Styles from "./common.module.css";
 
 const ToolTipGrid = ({ title, children }) => (
   <Tooltip title={title}>{children}</Tooltip>
@@ -24,7 +25,8 @@ export default class CardCode extends PureComponent {
               <Grid item xs={3} key={card.cardId}>
                 <img
                   src={require(`../DataDragonSet1/en_us/img/cards/${card.cardId}.png`)}
-                  style={{ maxWidth: "100%" }}
+                  // style={{ maxWidth: "100%" }}
+                  className={Styles.cardGrid}
                   alt="card"
                 />
               </Grid>
