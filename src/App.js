@@ -3,19 +3,34 @@ import "./App.css";
 import * as CardAPI from "./API/CardAPI";
 import CardCode from "../src/component/CardCode";
 import Session from "../src/component/Session";
+import UserProfile from "./component/UserProfile";
+import { Grid } from "@material-ui/core";
 
 export default class App extends Component {
-  state = { allCards: [], sessionId: "", playerName: "", voterId: "" };
+  state = {
+    allCards: [],
+    sessionId: "",
+    playerName: "",
+    voterId: "",
+    player: "",
+    gameState: "",
+    isSessionIdGiven: false
+  };
 
   componentDidMount() {
     this.timer = setInterval(() => {
       try {
         CardAPI.getCodes(this.state.sessionId).then(codes => {
-          if (typeof codes === "undefined") {
+          if (typeof codes.cards === "undefined") {
             console.log("undefined response");
           } else {
-            this.setState({ allCards: codes });
-            console.log("Polled API: ", { codes });
+            this.setState({
+              allCards: codes.cards,
+              player: codes.playerName,
+              gameStatus: codes.gameState,
+              isSessionIdGiven: true
+            });
+            console.log(codes);
           }
         });
       } catch (error) {
@@ -29,13 +44,13 @@ export default class App extends Component {
     this.timer = null;
   }
 
-  updateSessionId = (id) => {
+  updateSessionId = id => {
     this.setState({ sessionId: id });
-  }
+  };
 
-  updateVoterId = (id) => {
+  updateVoterId = id => {
     this.setState({ voterId: id });
-  }
+  };
 
   sendVote = (cardId, cardCode) => {
     let query = {
@@ -56,15 +71,43 @@ export default class App extends Component {
 
     return (
       <div className="App">
-        <div>
-          <Session
-            sessionId={sessionId}
-            playerName={playerName}
-            voterId={voterId}
-            onChangeQuery={this.updateSessionId}
-            onChangeVoter={this.updateVoterId}
-          />
-        </div>
+        <Grid container style={{ height: "150px" }}>
+          <Grid
+            item
+            xs={6}
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center"
+            }}
+          >
+            <Session
+              sessionId={sessionId}
+              playerName={playerName}
+              voterId={voterId}
+              onChangeQuery={this.updateSessionId}
+              onChangeVoter={this.updateVoterId}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center"
+            }}
+          >
+            {this.state.isSessionIdGiven ? (
+              <UserProfile
+                player={this.state.player}
+                gameStatus={this.state.gameStatus}
+              />
+            ) : (
+              ""
+            )}
+          </Grid>
+        </Grid>
         <div className="split left">
           <CardCode Cards={allCards} Vote={this.sendVote} />
         </div>
