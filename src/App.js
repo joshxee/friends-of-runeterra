@@ -3,9 +3,16 @@ import "./App.css";
 import * as CardAPI from "./API/CardAPI";
 import CardCode from "../src/component/CardCode";
 import Session from "../src/component/Session";
+import VoteResults from "./component/VoteResults"
 
 export default class App extends Component {
-  state = { allCards: [], sessionId: "", playerName: "", voterId: "" };
+  state = {
+    allCards: [],
+    sessionId: "",
+    playerName: "",
+    voterId: "",
+    votes: []
+  };
 
   componentDidMount() {
     this.timer = setInterval(() => {
@@ -15,7 +22,15 @@ export default class App extends Component {
             console.log("undefined response");
           } else {
             this.setState({ allCards: codes });
-            console.log("Polled API: ", { codes });
+            console.log("Polled cards: ", { codes });
+          }
+        });
+        CardAPI.getVotes(this.state.sessionId).then(votes => {
+          if (typeof codes === "undefined") {
+            console.log("undefined response");
+          } else {
+            this.setState({ votes: votes });
+            console.log("Polled votes: ", { votes });
           }
         });
       } catch (error) {
@@ -29,13 +44,13 @@ export default class App extends Component {
     this.timer = null;
   }
 
-  updateSessionId = (id) => {
+  updateSessionId = id => {
     this.setState({ sessionId: id });
-  }
+  };
 
-  updateVoterId = (id) => {
+  updateVoterId = id => {
     this.setState({ voterId: id });
-  }
+  };
 
   sendVote = (cardId, cardCode) => {
     let query = {
@@ -52,7 +67,7 @@ export default class App extends Component {
   };
 
   render() {
-    let { allCards, sessionId, playerName, voterId } = this.state;
+    let { allCards, sessionId, playerName, voterId, votes } = this.state;
 
     return (
       <div className="App">
@@ -70,6 +85,9 @@ export default class App extends Component {
         </div>
         <div className="split right">
           <CardCode Cards={allCards} Vote={this.sendVote} />
+        </div>
+        <div>
+          <VoteResults votes={votes}/>
         </div>
       </div>
     );
