@@ -1,26 +1,56 @@
 import React, { Component } from "react";
+import TextField from "@material-ui/core/TextField";
+import { Grid } from "@material-ui/core";
 
 class Session extends Component {
   render() {
-    const { sessionId, playerName, voterId, onChangeQuery, onChangeVoter } = this.props;
+    const {
+      sessionId,
+      playerName,
+      voterId,
+      onChangeQuery,
+      onChangeVoter
+    } = this.props;
 
     return (
-      <div>
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Session ID"
-          value={sessionId}
-          onChange={event => onChangeQuery(event.target.value)}
-        />
-        <input
-          className="input-field"
-          type="text"
-          placeholder="voterId"
-          value={voterId}
-          onChange={event => onChangeVoter(event.target.value)}
-        />
-      </div>
+      <Grid container>
+        <Grid
+          item
+          xs={6}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "5px"
+          }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Session ID"
+            margin="normal"
+            value={sessionId}
+            variant="outlined"
+            onChange={event => onChangeQuery(event.target.value)}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            padding: "5px"
+          }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Vorter ID"
+            margin="normal"
+            value={voterId}
+            variant="outlined"
+            onChange={event => onChangeVoter(event.target.value)}
+          />
+        </Grid>
+      </Grid>
     );
   }
 }

@@ -15,8 +15,8 @@ export const getCodes = sessionID =>
   })
     .then(res => res.json())
     .then(data => {
-      if (data.length > 0) return data[0].cards;
-      return [];
+      if (data.length > 0) return data[0];
+      return []
     });
 
 export const postVote = query =>
