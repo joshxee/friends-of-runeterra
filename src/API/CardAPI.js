@@ -17,10 +17,11 @@ export const getCodes = sessionID =>
     .then(data => {
       if (data.length > 0) return data[0];
       return [];
-    });
+    })
+    .catch(error => console.log(error.message));
 
 export const getVotes = sessionID =>
-  fetch(`${api}/Votes?gameSessionId=string11111`, {
+  fetch(`${api}/Votes?gameSessionId=${sessionID}`, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -33,7 +34,8 @@ export const getVotes = sessionID =>
     referrer: "no-referrer"
   })
     .then(res => res.json())
-    .then(data => data);
+    .then(data => data)
+    .catch(error => console.log(error.message));
 
 export const postVote = query =>
   fetch(`${api}/Votes`, {
@@ -46,4 +48,6 @@ export const postVote = query =>
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify({ query })
-  }).then(res => res.json());
+  })
+    .then(res => res.json())
+    .catch(error => console.log(error.message));

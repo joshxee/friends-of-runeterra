@@ -21,26 +21,26 @@ export default class App extends Component {
   componentDidMount() {
     this.timer = setInterval(() => {
       try {
-        CardAPI.getCodes(this.state.sessionId).then(codes => {
-          if (typeof codes.cards === "undefined") {
+        CardAPI.getCodes(this.state.sessionId).then(response => {
+          if (typeof response === "undefined" || typeof response.cards === "undefined") {
             console.log("undefined cards response");
           } else {
             this.setState({
-              allCards: codes.cards,
-              player: codes.playerName,
-              gameStatus: codes.gameState,
+              allCards: response.cards,
+              player: response.playerName,
+              gameStatus: response.gameState,
               isSessionIdGiven: true
             });
-            console.log("Polled cards: ", { codes });
+            console.log("Polled cards: ", { response });
           }
         });
 
-        CardAPI.getVotes(this.state.sessionId).then(votes => {
-          if (typeof votes.votes === "undefined") {
+        CardAPI.getVotes(this.state.sessionId).then(response => {
+          if (typeof response === "undefined") {
             console.log("undefined votes response");
           } else {
-            this.setState({ votes: votes.votes });
-            console.log("Polled votes: ", { votes });
+            this.setState({ votes: response.votes });
+            console.log("Polled votes: ", { response });
           }
         });
       } catch (error) {
