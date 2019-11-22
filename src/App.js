@@ -46,7 +46,7 @@ export default class App extends Component {
       } catch (error) {
         console.log(`ERROR Name: ${error.name} Message: ${error.message}`);
       }
-    }, 3000);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -81,7 +81,9 @@ export default class App extends Component {
 
     return (
       <div className="App">
-        <Grid container style={{ height: "150px" }}>
+        <img src={require('./images/header1.png')} alt="Header"/>
+
+        <Grid container style={{ height: "100px" }}>
           <Grid
             item
             xs={6}
@@ -121,9 +123,9 @@ export default class App extends Component {
         <div className="split left">
           <CardCode Cards={allCards} Vote={this.sendVote} />
         </div>
-        <div className="split right">
+        {/* <div className="split right">
           <CardCode Cards={allCards} Vote={this.sendVote} />
-        </div>
+        </div> */}
         <div className="footer">
           <VoteResults votes={votes} />
         </div>

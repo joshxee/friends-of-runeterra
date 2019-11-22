@@ -42,7 +42,7 @@ class Session extends Component {
         >
           <TextField
             id="outlined-basic"
-            label="Vorter ID"
+            label="Voter ID"
             margin="normal"
             value={voterId}
             variant="outlined"
