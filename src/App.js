@@ -72,7 +72,7 @@ export default class App extends Component {
     };
     CardAPI.postVote(query).then(updatedBooks => {
       //add vote to card
-      this.getAllBooks();
+      //this.getAllBooks();
     });
   };
 

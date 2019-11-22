@@ -36,6 +36,7 @@ export default class CardCode extends PureComponent {
                   // style={{ maxWidth: "100%" }}
                   className={Styles.cardGrid}
                   alt="card"
+                  onClick={() => this.props.Vote(card.cardId, card.cardCode)}
                 />
               </Grid>
             </ToolTipGrid>

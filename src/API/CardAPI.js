@@ -37,17 +37,16 @@ export const getVotes = sessionID =>
     .then(data => data)
     .catch(error => console.log(error.message));
 
-export const postVote = query =>
+export const postVote = cardInfo =>
   fetch(`${api}/Votes`, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json"
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({ query })
-  })
-    .then(res => res.json())
-    .catch(error => console.log(error.message));
+    body: JSON.stringify(cardInfo),
+    redirect: "follow",
+    referrer: "no-referrer"
+  });
