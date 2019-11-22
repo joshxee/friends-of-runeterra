@@ -3,6 +3,7 @@ import "./App.css";
 import * as CardAPI from "./API/CardAPI";
 import CardCode from "../src/component/CardCode";
 import Session from "../src/component/Session";
+import VoteResults from "./component/VoteResults";
 import UserProfile from "./component/UserProfile";
 import { Grid } from "@material-ui/core";
 
@@ -10,8 +11,8 @@ export default class App extends Component {
   state = {
     allCards: [],
     sessionId: "",
-    playerName: "",
     voterId: "",
+    votes: [],
     player: "",
     gameState: "",
     isSessionIdGiven: false
@@ -20,23 +21,32 @@ export default class App extends Component {
   componentDidMount() {
     this.timer = setInterval(() => {
       try {
-        CardAPI.getCodes(this.state.sessionId).then(codes => {
-          if (typeof codes.cards === "undefined") {
-            console.log("undefined response");
+        CardAPI.getCodes(this.state.sessionId).then(response => {
+          if (typeof response === "undefined" || typeof response.cards === "undefined") {
+            console.log("undefined cards response");
           } else {
             this.setState({
-              allCards: codes.cards,
-              player: codes.playerName,
-              gameStatus: codes.gameState,
+              allCards: response.cards,
+              player: response.playerName,
+              gameStatus: response.gameState,
               isSessionIdGiven: true
             });
-            console.log(codes);
+            console.log("Polled cards: ", { response });
+          }
+        });
+
+        CardAPI.getVotes(this.state.sessionId).then(response => {
+          if (typeof response === "undefined") {
+            console.log("undefined votes response");
+          } else {
+            this.setState({ votes: response.votes });
+            console.log("Polled votes: ", { response });
           }
         });
       } catch (error) {
-        console.log("error");
+        console.log(`ERROR Name: ${error.name} Message: ${error.message}`);
       }
-    }, 2000);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -67,7 +77,7 @@ export default class App extends Component {
   };
 
   render() {
-    let { allCards, sessionId, playerName, voterId } = this.state;
+    let { allCards, sessionId, playerName, voterId, votes } = this.state;
 
     return (
       <div className="App">
@@ -113,6 +123,9 @@ export default class App extends Component {
         </div>
         <div className="split right">
           <CardCode Cards={allCards} Vote={this.sendVote} />
+        </div>
+        <div className="footer">
+          <VoteResults votes={votes} />
         </div>
       </div>
     );
