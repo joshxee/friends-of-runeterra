@@ -11,7 +11,6 @@ export default class App extends Component {
   state = {
     allCards: [],
     sessionId: "",
-    playerName: "",
     voterId: "",
     votes: [],
     player: "",
@@ -24,7 +23,7 @@ export default class App extends Component {
       try {
         CardAPI.getCodes(this.state.sessionId).then(codes => {
           if (typeof codes.cards === "undefined") {
-            console.log("undefined response");
+            console.log("undefined cards response");
           } else {
             this.setState({
               allCards: codes.cards,
@@ -35,18 +34,19 @@ export default class App extends Component {
             console.log("Polled cards: ", { codes });
           }
         });
+
         CardAPI.getVotes(this.state.sessionId).then(votes => {
-          if (typeof codes === "undefined") {
-            console.log("undefined response");
+          if (typeof votes.votes === "undefined") {
+            console.log("undefined votes response");
           } else {
-            this.setState({ votes: votes });
+            this.setState({ votes: votes.votes });
             console.log("Polled votes: ", { votes });
           }
         });
       } catch (error) {
-        console.log("error");
+        console.log(`ERROR Name: ${error.name} Message: ${error.message}`);
       }
-    }, 2000);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -124,7 +124,7 @@ export default class App extends Component {
         <div className="split right">
           <CardCode Cards={allCards} Vote={this.sendVote} />
         </div>
-        <div>
+        <div className="footer">
           <VoteResults votes={votes} />
         </div>
       </div>

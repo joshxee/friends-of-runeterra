@@ -6,7 +6,6 @@ class Session extends Component {
   render() {
     const {
       sessionId,
-      playerName,
       voterId,
       onChangeQuery,
       onChangeVoter

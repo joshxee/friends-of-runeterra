@@ -10,9 +10,17 @@ const ToolTipGrid = ({ title, children }) => (
 
 export default class CardCode extends PureComponent {
   static propTypes = {
-    contacts: PropTypes.array.isRequired,
-    onDeleteContact: PropTypes.func.isRequired
+    Cards: PropTypes.array.isRequired
   };
+
+  setCardArtSource(code) {
+    try {
+      const src = require(`../DataDragonSet1/en_us/img/cards/${code}.png`);
+      return src
+    } catch (err) {
+      return require(`../DataDragonSet1/en_us/img/cards/01DE001.png`)
+    }
+  }
 
   render() {
     let cards = this.props.Cards;
@@ -21,10 +29,10 @@ export default class CardCode extends PureComponent {
       <Grid container spacing={2} style={{ padding: "20px" }}>
         {cards.map(card => {
           return (
-            <ToolTipGrid title={card.cardId}>
+            <ToolTipGrid title={card.cardId} key={card.cardId}>
               <Grid item xs={3} key={card.cardId}>
                 <img
-                  src={require(`../DataDragonSet1/en_us/img/cards/${card.cardId}.png`)}
+                  src={this.setCardArtSource(card.cardCode)}
                   // style={{ maxWidth: "100%" }}
                   className={Styles.cardGrid}
                   alt="card"
